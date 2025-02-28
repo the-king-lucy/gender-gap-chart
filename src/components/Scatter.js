@@ -46,10 +46,9 @@ const ScatterplotComponent = () => {
       .sort((a, b) => a["average-total-rem-gpg"] - b["average-total-rem-gpg"])
       .map((item, index) => ({ ...item, xIndex: index }));
 
-    // Add fade-out and fade-in transition correctly
-    setData([]); // Clear data to trigger fade-out
+    setData([]);
     setTimeout(() => {
-      setData(filteredData); // Set the new data after a delay
+      setData(filteredData);
     }, 300);
 
     setEmployerInfo(null);

@@ -20,7 +20,6 @@
   color: #333;
 }
 
-/* Styles for the custom tooltip in the scatterplot */
 .custom-tooltip {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #d3d3d3;
@@ -55,7 +54,6 @@
   border-color: white transparent transparent transparent;
 }
 
-/* Adding a subtle scale effect on hover */
 .custom-tooltip:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
