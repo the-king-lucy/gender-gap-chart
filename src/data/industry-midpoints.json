@@ -1,0 +1,78 @@
+[
+  {
+    "industry": "Construction",
+    "mid-point": 25.3
+  },
+  {
+    "industry": "Financial and Insurance Services",
+    "mid-point": 22.2
+  },
+  {
+    "industry": "Rental, Hiring and Real Estate Services",
+    "mid-point": 21.2
+  },
+  {
+    "industry": "Mining",
+    "mid-point": 19.8
+  },
+  {
+    "industry": "Professional, Scientific and Technical Services",
+    "mid-point": 17.4
+  },
+  {
+    "industry": "Electricity, Gas, Water and Waste Services",
+    "mid-point": 17.1
+  },
+  {
+    "industry": "Wholesale Trade",
+    "mid-point": 16.4
+  },
+  {
+    "industry": "Manufacturing ",
+    "mid-point": 14.2
+  },
+  {
+    "industry": "Transport, Postal and Warehousing",
+    "mid-point": 13.6
+  },
+  {
+    "industry": "Agriculture, Forestry and Fishing",
+    "mid-point": 13.0
+  },
+  {
+    "industry": "Information Media and Telecommunications",
+    "mid-point": 12.1
+  },
+  {
+    "industry": "Retail Trade",
+    "mid-point": 10.6
+  },
+  {
+    "industry": "Other Services",
+    "mid-point": 10.6
+  },
+  {
+    "industry": "Education and Training ",
+    "mid-point": 7.6
+  },
+  {
+    "industry": "Accommodation and Food Services",
+    "mid-point": 7.2
+  },
+  {
+    "industry": "Administrative and Support Services",
+    "mid-point": 7.2
+  },
+  {
+    "industry": "Arts and Recreation Services",
+    "mid-point": 7.2
+  },
+  {
+    "industry": "Health Care and Social Assistance",
+    "mid-point": 3.7
+  },
+  {
+    "industry": "Public Administration and Safety ",
+    "mid-point": 2.1
+  }
+]
