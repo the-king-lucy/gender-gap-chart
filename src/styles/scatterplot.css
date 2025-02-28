@@ -19,3 +19,44 @@
   font-size: 1.5rem;
   color: #333;
 }
+
+/* Styles for the custom tooltip in the scatterplot */
+.custom-tooltip {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  max-width: 250px;
+  transition: all 0.2s ease;
+}
+
+.custom-tooltip p {
+  margin: 0;
+  padding: 4px 0;
+  line-height: 1.4;
+}
+
+.custom-tooltip p strong {
+  color: #555;
+}
+
+.custom-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+/* Adding a subtle scale effect on hover */
+.custom-tooltip:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

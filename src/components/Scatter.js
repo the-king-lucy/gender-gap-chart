@@ -25,7 +25,6 @@ import {
 import "../styles/scatterplot.css";
 import genderGapData from "../data/gender-gap-main.json";
 import industryMidpoints from "../data/industry-midpoints.json";
-import { motion, AnimatePresence } from "framer-motion";
 
 const ScatterplotComponent = () => {
   const [data, setData] = useState([]);
@@ -98,40 +97,59 @@ const ScatterplotComponent = () => {
   )?.["mid-point"];
 
   const getEmployerMessage = () => {
-    if (!employerInfo)
-      return "Select an employer to see gender pay gap insights.";
-    const {
-      employer,
-      "average-total-rem-gpg": gpg,
-      "total-workforce-average-rem": rem,
-      "upper-quartile-women": women,
-    } = employerInfo;
-    const industryMidpoint = industryMidpoints.find(
-      (item) => item.industry === selectedIndustry
-    )?.["mid-point"];
+    if (employerInfo) {
+      const {
+        employer,
+        "average-total-rem-gpg": gpg,
+        "total-workforce-average-rem": rem,
+        "upper-quartile-women": women,
+      } = employerInfo;
+      const industryMidpoint = industryMidpoints.find(
+        (item) => item.industry === selectedIndustry
+      )?.["mid-point"];
 
-    let message = "";
-    if (gpg > 5) {
-      message = `${employer} has an average gender pay gap in favour of men.`;
-    } else if (gpg < -5) {
-      message = `${employer} has an average gender pay gap in favour of women.`;
-    } else {
-      message = `${employer} does not significantly favour men or women.`;
-    }
-
-    if (industryMidpoint !== undefined) {
-      if (gpg > industryMidpoint) {
-        message += " They are in the above average for their industry.";
-      } else if (gpg < industryMidpoint) {
-        message += " They are in the below average for their industry.";
+      let message = "";
+      if (gpg > 5) {
+        message = `${employer} has an average gender pay gap in favour of men.`;
+      } else if (gpg < -5) {
+        message = `${employer} has an average gender pay gap in favour of women.`;
       } else {
-        message += " They are in the average for their industry.";
+        message = `${employer} does not significantly favour men or women.`;
+      }
+
+      if (industryMidpoint !== undefined) {
+        if (gpg > industryMidpoint) {
+          message += " They are in the above average for their industry.";
+        } else if (gpg < industryMidpoint) {
+          message += " They are in the below average for their industry.";
+        } else {
+          message += " They are in the average for their industry.";
+        }
+      }
+
+      message += ` At ${employer}, the total average remuneration is $${rem} and ${women}% of their leadership are women.`;
+
+      return message;
+    } else if (selectedIndustry) {
+      const industryData = industryMidpoints.find(
+        (item) => item.industry === selectedIndustry
+      );
+      if (industryData) {
+        const {
+          industry,
+          "gender-balanced": genderBalanced,
+          "percent-women": percentWomen,
+        } = industryData;
+        if (genderBalanced === "women") {
+          return `${industry} is a female dominated industry. ${percentWomen}% of the workforce are women.`;
+        } else if (genderBalanced === "men") {
+          return `${industry} is a male dominated industry. ${percentWomen}% of the workforce are women.`;
+        } else if (genderBalanced === "balance") {
+          return `${industry} is considered a gender balanced industry. ${percentWomen}% of the workforce are women.`;
+        }
       }
     }
-
-    message += ` At ${employer}, the total average remuneration is $${rem} and ${women}% of their leadership are women.`;
-
-    return message;
+    return "Select an employer or industry to see gender pay gap insights.";
   };
 
   return (
@@ -175,71 +193,77 @@ const ScatterplotComponent = () => {
               <Typography variant="body1">{getEmployerMessage()}</Typography>
             </CardContent>
           </Card>
-          <AnimatePresence>
-            {data.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ResponsiveContainer width="100%" height={400}>
-                  <ScatterChart>
-                    <CartesianGrid />
-                    <XAxis type="number" dataKey="xIndex" hide={true} />
-                    <YAxis
-                      type="number"
-                      dataKey="average-total-rem-gpg"
-                      name="Average Total Rem GPG"
-                      domain={[-100, 100]}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Scatter name="Data Points" data={data} fill="#8884d8" />
-                    {searchEmployer && (
-                      <Scatter
-                        name="Highlighted Employer"
-                        data={data.filter(
-                          (item) =>
-                            item.employer.toLowerCase() ===
-                            searchEmployer.toLowerCase()
-                        )}
-                        fill="#ff0000"
-                      />
-                    )}
-                    {industryMidpoint && (
-                      <ReferenceLine
-                        y={industryMidpoint}
-                        stroke="#82ca9d"
-                        label="Industry Midpoint"
-                        strokeDasharray="3 3"
-                      />
-                    )}
-                    <ReferenceArea
-                      y1={-5}
-                      y2={5}
-                      strokeOpacity={0.3}
-                      fill="#d0eaff"
-                      label="Target Range"
-                    />
-                    <ReferenceArea
-                      y1={-100}
-                      y2={-5}
-                      strokeOpacity={0.1}
-                      fill="#ffdddd"
-                      label="In Favour of Women"
-                    />
-                    <ReferenceArea
-                      y1={5}
-                      y2={100}
-                      strokeOpacity={0.1}
-                      fill="#ddddff"
-                      label="In Favour of Men"
-                    />
-                  </ScatterChart>
-                </ResponsiveContainer>
-              </motion.div>
-            )}
-          </AnimatePresence>
+
+          <ResponsiveContainer width="100%" height={400}>
+            <ScatterChart>
+              <CartesianGrid />
+              <XAxis type="number" dataKey="xIndex" hide={true} />
+              <YAxis
+                type="number"
+                dataKey="average-total-rem-gpg"
+                name="Average Total Rem GPG"
+                domain={[-100, 100]}
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                wrapperStyle={{ zIndex: 1000, pointerEvents: "none" }}
+              />
+
+              {industryMidpoint && (
+                <ReferenceLine
+                  y={industryMidpoint}
+                  stroke="#82ca9d"
+                  label="Industry Midpoint"
+                  strokeDasharray="3 3"
+                />
+              )}
+              <ReferenceArea
+                y1={-5}
+                y2={5}
+                strokeOpacity={0.3}
+                fill="#d0eaff"
+                label="Target Range"
+              />
+              <ReferenceArea
+                y1={-100}
+                y2={-5}
+                strokeOpacity={0.1}
+                fill="#ffdddd"
+                label="In Favour of Women"
+              />
+              <ReferenceArea
+                y1={5}
+                y2={100}
+                strokeOpacity={0.1}
+                fill="#ddddff"
+                label="In Favour of Men"
+              />
+              <Scatter
+                name="Data Points"
+                data={data}
+                fill="#8884d8"
+                isAnimationActive={true}
+                animationBegin={0}
+                animationDuration={300}
+                animationEasing="ease-out"
+              />
+              {searchEmployer && (
+                <Scatter
+                  name="Highlighted Employer"
+                  data={data.filter(
+                    (item) =>
+                      item.employer.toLowerCase() ===
+                      searchEmployer.toLowerCase()
+                  )}
+                  fill="#ff0000"
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={300}
+                  animationEasing="ease-out"
+                />
+              )}
+            </ScatterChart>
+          </ResponsiveContainer>
         </CardContent>
       </Card>
     </div>

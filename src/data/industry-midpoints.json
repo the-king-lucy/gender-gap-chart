@@ -1,78 +1,116 @@
 [
   {
     "industry": "Construction",
-    "mid-point": 25.3
+    "mid-point": 25.3,
+    "gender-balanced": "men",
+    "percent-women": 21
   },
   {
     "industry": "Financial and Insurance Services",
-    "mid-point": 22.2
+    "mid-point": 22.2,
+    "gender-balanced": "balance",
+    "percent-women": 53
   },
   {
     "industry": "Rental, Hiring and Real Estate Services",
-    "mid-point": 21.2
+    "mid-point": 21.2,
+    "gender-balanced": "balance",
+    "percent-women": 40
   },
   {
     "industry": "Mining",
-    "mid-point": 19.8
+    "mid-point": 19.8,
+    "gender-balanced": "men",
+    "percent-women": 22
   },
   {
     "industry": "Professional, Scientific and Technical Services",
-    "mid-point": 17.4
+    "mid-point": 17.4,
+    "gender-balanced": "balance",
+    "percent-women": 43
   },
   {
     "industry": "Electricity, Gas, Water and Waste Services",
-    "mid-point": 17.1
+    "mid-point": 17.1,
+    "gender-balanced": "men",
+    "percent-women": 26
   },
   {
     "industry": "Wholesale Trade",
-    "mid-point": 16.4
+    "mid-point": 16.4,
+    "gender-balanced": "men",
+    "percent-women": 38
   },
   {
     "industry": "Manufacturing ",
-    "mid-point": 14.2
+    "mid-point": 14.2,
+    "gender-balanced": "men",
+    "percent-women": 27
   },
   {
     "industry": "Transport, Postal and Warehousing",
-    "mid-point": 13.6
+    "mid-point": 13.6,
+    "gender-balanced": "men",
+    "percent-women": 26
   },
   {
     "industry": "Agriculture, Forestry and Fishing",
-    "mid-point": 13.0
+    "mid-point": 13.0,
+    "gender-balanced": "men",
+    "percent-women": 35
   },
   {
     "industry": "Information Media and Telecommunications",
-    "mid-point": 12.1
+    "mid-point": 12.1,
+    "gender-balanced": "balance",
+    "percent-women": 41
   },
   {
     "industry": "Retail Trade",
-    "mid-point": 10.6
+    "mid-point": 10.6,
+    "gender-balanced": "balance",
+    "percent-women": 56
   },
   {
     "industry": "Other Services",
-    "mid-point": 10.6
+    "mid-point": 10.6,
+    "gender-balanced": "balance",
+    "percent-women": 55
   },
   {
     "industry": "Education and Training ",
-    "mid-point": 7.6
+    "mid-point": 7.6,
+    "gender-balanced": "women",
+    "percent-women": 66
   },
   {
     "industry": "Accommodation and Food Services",
-    "mid-point": 7.2
+    "mid-point": 7.2,
+    "gender-balanced": "balance",
+    "percent-women": 52
   },
   {
     "industry": "Administrative and Support Services",
-    "mid-point": 7.2
+    "mid-point": 7.2,
+    "gender-balanced": "balance",
+    "percent-women": 47
   },
   {
     "industry": "Arts and Recreation Services",
-    "mid-point": 7.2
+    "mid-point": 7.2,
+    "gender-balanced": "balance",
+    "percent-women": 52
   },
   {
     "industry": "Health Care and Social Assistance",
-    "mid-point": 3.7
+    "mid-point": 3.7,
+    "gender-balanced": "women",
+    "percent-women": 78
   },
   {
     "industry": "Public Administration and Safety ",
-    "mid-point": 2.1
+    "mid-point": 2.1,
+    "gender-balanced": "men",
+    "percent-women": 26
   }
 ]
