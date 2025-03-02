@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 
 const FlashingDot = ({ cx, cy, fill }) => {
-  const [opacity, setOpacity] = useState(1);
+  if (!cx || !cy) return null; // Ensure valid positions
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setOpacity((prev) => (prev === 1 ? 0.3 : 1)); // Flash effect
-    }, 700); // Change opacity every 700ms
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
-
-  return <circle cx={cx} cy={cy} r={6} fill={fill} opacity={opacity} />;
+  return (
+    <circle
+      cx={cx}
+      cy={cy}
+      r={6} // Slightly larger for visibility
+      fill={fill || "red"}
+      className="glowing-dot" // ✅ Use CSS instead of state opacity
+    />
+  );
 };
 
 export default FlashingDot;
