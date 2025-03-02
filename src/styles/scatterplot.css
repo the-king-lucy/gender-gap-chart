@@ -15,6 +15,13 @@
   padding-bottom: 0px;
 }
 
+.source-text {
+  font-size: clamp(10px, 1vw, 12px); /* Adjusts based on screen size */
+  font-family: var(--nano-light-font);
+
+  fill: #333333;
+}
+
 @keyframes glow {
   0% {
     filter: drop-shadow(0 0 2px red);
@@ -40,7 +47,7 @@
 .search-section .scatterplot-filter,
 .search-section .scatterplot-search {
   flex: 1;
-
+  min-height: 40px;
   min-width: 0;
 }
 

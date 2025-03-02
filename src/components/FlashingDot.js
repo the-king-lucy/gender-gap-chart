@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
 const FlashingDot = ({ cx, cy, fill }) => {
-  if (!cx || !cy) return null; // Ensure valid positions
+  if (!cx || !cy) return null;
 
   return (
     <circle
       cx={cx}
       cy={cy}
-      r={6} // Slightly larger for visibility
+      r={4}
       fill={fill || "#c21616"}
-      className="glowing-dot" // ✅ Use CSS instead of state opacity
+      className="glowing-dot"
     />
   );
 };

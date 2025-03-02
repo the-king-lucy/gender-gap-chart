@@ -215,7 +215,7 @@ const ScatterplotComponent = () => {
           Explore how your boss measures up on the gender pay gap
         </span>
         <span>
-          Enter your industry and company above to see how they measure up.
+          Enter your industry and company below to see how they measure up.
         </span>
       </div>
     );
@@ -505,17 +505,7 @@ const ScatterplotComponent = () => {
                 wrapperStyle={{ zIndex: 1000, pointerEvents: "none" }}
               />
             </ScatterChart>
-            <text
-              x="50%"
-              y="95%"
-              textAnchor="left"
-              fontSize={({ viewBox }) => Math.max(viewBox.width * 0.0005, 1.5)}
-              fill="#333333"
-              style={{
-                fontStyle: "italic",
-                fontFamily: "var(--nano-light-font)",
-              }}
-            >
+            <text x="50%" y="95%" textAnchor="left" className="source-text">
               Source: Employer gender pay gaps report, March 2025. The 'gender
               pay gap' is defined as 'the difference between the average or
               median remuneration of men and the average or median remuneration
