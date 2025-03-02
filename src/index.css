@@ -1,13 +1,53 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "SuecaNanoBold";
+  src: url("./fonts/SuecaNano-Bold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "SuecaHDRegular";
+  src: url("./fonts/SuecaHd-Regular.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SuecaNanoMedium";
+  src: url("./fonts/SuecaNano-Medium.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SuecaNanoLight";
+  src: url("./fonts/SuecaNano-Light.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SuecaHDsemibold";
+  src: url("./fonts/SuecaHd-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+:root,
+html,
+body {
+  --headline-font: "SuecaHDRegular", sans-serif;
+  --boldheadline-font: "SuecaHDsemibold", sans-serif;
+  --nano-medium-font: "SuecaNanoMedium", sans-serif;
+  --nano-bold-font: "SuecaNano", sans-serif;
+  --nano-light-font: "SuecaNanoLight", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
 }

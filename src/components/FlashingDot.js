@@ -8,7 +8,7 @@ const FlashingDot = ({ cx, cy, fill }) => {
       cx={cx}
       cy={cy}
       r={6} // Slightly larger for visibility
-      fill={fill || "red"}
+      fill={fill || "#c21616"}
       className="glowing-dot" // ✅ Use CSS instead of state opacity
     />
   );

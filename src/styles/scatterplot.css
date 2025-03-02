@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
 }
 
 .scatterplot-card {
@@ -12,22 +12,96 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   background-color: white;
+  padding-bottom: 0px;
 }
 
 @keyframes glow {
   0% {
-    filter: drop-shadow(0 0 3px red);
+    filter: drop-shadow(0 0 2px red);
   }
   50% {
     filter: drop-shadow(0 0 6px red);
   }
   100% {
-    filter: drop-shadow(0 0 3px red);
+    filter: drop-shadow(0 0 2px red);
   }
 }
 
+.search-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 4px;
+  padding-top: 0px;
+}
+
+.search-section .scatterplot-filter,
+.search-section .scatterplot-search {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.scatterplot-filter .Mui-focused {
+  outline: none !important;
+  box-shadow: none !important;
+  color: "#333333";
+}
+
+.scatterplot-search .MuiInputBase-root {
+  font-family: "YourFont", sans-serif !important;
+}
+
+.scatterplot-search .MuiInputBase-input {
+  font-family: "YourFont", sans-serif !important;
+}
+
+.scatterplot-filter .MuiInputBase-root:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  color: "#333333";
+}
+
+.scatterplot-filter .MuiInputLabel-root.Mui-focused {
+  color: inherit !important;
+}
+
+.scatterplot-filter .MuiInput-underline:after {
+  border-bottom: none !important;
+  color: "#333333";
+}
+
+.search-section .scatterplot-search .MuiAutocomplete-root {
+  width: 100% !important;
+  display: flex;
+}
+
+.search-section .scatterplot-search .MuiAutocomplete-root,
+.search-section .scatterplot-search .MuiTextField-root {
+  flex-grow: 1;
+  width: 100% !important;
+}
+
 .glowing-dot {
-  animation: glow 2s infinite alternate;
+  animation: glow 0.5s infinite alternate;
+}
+
+.intro-text {
+  font-family: var(--boldheadline-font);
+  font-size: clamp(12px, 2vw, 17px);
+}
+
+.intro-text-larger {
+  font-family: var(--boldheadline-font);
+
+  font-size: clamp(16px, 3vw, 22px);
+}
+
+.intro-text span {
+  display: block;
+  margin-bottom: 8px;
 }
 
 .scatterplot-title {
@@ -37,11 +111,13 @@
 }
 
 .gpg {
-  color: #c21616;
+  color: #111111;
+  background-color: #ffa4a3;
 }
 
 .balance {
-  color: #81a538;
+  color: #111111;
+  background-color: #d4d4d4;
 }
 
 .custom-tooltip {
@@ -86,30 +162,4 @@
 .employer-name {
   font-weight: bold;
   font-size: 1.2em;
-}
-
-.text-red-500 {
-  color: red;
-}
-
-.text-blue-500 {
-  color: blue;
-}
-
-.text-green-500 {
-  color: green;
-}
-
-.text-yellow-500 {
-  color: orange;
-}
-
-.remuneration-amount {
-  font-weight: bold;
-  color: #4caf50; /* Green */
-}
-
-.leadership-women {
-  font-weight: bold;
-  color: #ff9800; /* Orange */
 }

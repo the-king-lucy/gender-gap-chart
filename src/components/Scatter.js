@@ -25,56 +25,36 @@ import {
 import "../styles/scatterplot.css";
 import genderGapData from "../data/gender-gap-main.json";
 import industryMidpoints from "../data/industry-midpoints.json";
-import FlashingDot from "./FlashingDot"; // 👈 Adjust path if needed
+import FlashingDot from "./FlashingDot";
 
 const ScatterplotComponent = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+
   const [selectedIndustry, setSelectedIndustry] = useState("");
   const [searchEmployer, setSearchEmployer] = useState("");
   const [employerInfo, setEmployerInfo] = useState(null);
-  const getSize = (value) => Math.max(5, Math.min(15, value / 10000));
+
   const [highlightedEmployer, setHighlightedEmployer] = useState(null);
-
-  useEffect(() => {
-    if (genderGapData && Array.isArray(genderGapData)) {
-      setData(genderGapData);
-    }
-  }, []);
-
-  const renderXAxisLabel = useCallback(({ viewBox }) => {
-    if (!viewBox) return null; // ✅ Prevents errors if viewBox is undefined
-
-    return (
-      <text
-        x={viewBox.x + viewBox.width / 2} // ✅ Centers label horizontally
-        y={viewBox.y + viewBox.height / 2 + 10} // ✅ Places it inside the middle of the chart
-        textAnchor="middle"
-        fontSize={Math.max(viewBox.width * 0.02, 12)}
-        fontWeight="bold"
-        fill="black"
-      >
-        Employer
-      </text>
-    );
-  }, []);
 
   const handleIndustryChange = (event) => {
     const industry = event.target.value;
     setSelectedIndustry(industry);
-    setHighlightedEmployer(null); // ✅ Clear highlighted dot initially
+    setHighlightedEmployer(null);
+    setSearchEmployer("");
+    setEmployerInfo(null);
 
-    // ✅ Reset employer selection
-    setSearchEmployer(""); // Clears the employer search box
-    setEmployerInfo(null); // Clears employer info
+    if (!industry) {
+      setData(null);
+      return;
+    }
 
     const filteredData = genderGapData
       .filter((item) => item.industry === industry)
-      .sort((a, b) => a["average-total-rem-gpg"] - b["average-total-rem-gpg"]) // Ensure sorting
+      .sort((a, b) => a["average-total-rem-gpg"] - b["average-total-rem-gpg"])
       .map((item, index) => ({ ...item, xIndex: index }));
 
-    setData([]);
     setTimeout(() => {
-      setData(filteredData); // ✅ Load normal dots first
+      setData(filteredData);
     }, 500);
   };
 
@@ -82,39 +62,42 @@ const ScatterplotComponent = () => {
     const employer = value || "";
     setSearchEmployer(employer);
 
+    if (!employer) {
+      setEmployerInfo(null);
+      setHighlightedEmployer(null);
+      setData(null);
+      return;
+    }
+
     const matchedEmployer = genderGapData.find(
       (item) => item.employer.toLowerCase() === employer.toLowerCase()
     );
 
     if (matchedEmployer) {
       setSelectedIndustry(matchedEmployer.industry);
-      setEmployerInfo(matchedEmployer); // ✅ FIX: Update employerInfo
+      setEmployerInfo(matchedEmployer);
 
-      // 1️⃣ Filter & sort data
       const filteredData = genderGapData
         .filter((item) => item.industry === matchedEmployer.industry)
         .sort((a, b) => a["average-total-rem-gpg"] - b["average-total-rem-gpg"])
         .map((item, index) => ({ ...item, xIndex: index }));
 
-      setData([]);
-      setHighlightedEmployer(null);
-
+      setData(null);
       setTimeout(() => {
-        setData(filteredData); // ✅ Load all normal dots first
-
+        setData(filteredData);
         setTimeout(() => {
           const employerWithXIndex = filteredData.find(
             (item) => item.employer.toLowerCase() === employer.toLowerCase()
           );
-
           if (employerWithXIndex) {
             setHighlightedEmployer(employerWithXIndex);
           }
         }, 500);
       }, 500);
     } else {
-      setEmployerInfo(null); // ✅ Reset if no match
+      setEmployerInfo(null);
       setHighlightedEmployer(null);
+      setData(null);
     }
   };
 
@@ -126,10 +109,10 @@ const ScatterplotComponent = () => {
 
   const CustomDot = (props) => {
     const { cx, cy } = props;
-    const screenSizeFactor = window.innerWidth / 1000; // Scale based on width
-    const radius = Math.max(2, 4 * screenSizeFactor); // Ensure min/max size
+    const screenSizeFactor = window.innerWidth / 1000;
+    const radius = Math.max(1, 2 * screenSizeFactor);
 
-    return <circle cx={cx} cy={cy} r={radius} fill="red" />;
+    return <circle cx={cx} cy={cy} r={radius} fill="#333333" opacity={0.7} />;
   };
 
   const CustomTooltip = ({ active, payload }) => {
@@ -218,7 +201,6 @@ const ScatterplotComponent = () => {
               <strong className="balance">considered gender balanced.</strong>
             )}
             <br />
-            <br></br>
             <span className="percent-women">
               <strong>{percentWomen}%</strong> of the workforce are women. Hover
               over a dot to find information about different employers.
@@ -228,11 +210,13 @@ const ScatterplotComponent = () => {
       }
     }
     return (
-      <div>
-        <span>Does your company have a gender pay gap?</span>
-        <br></br>
-        <br></br>
-        <span>Choose an industry or an employer above to find out.</span>
+      <div className="intro-text">
+        <span className="intro-text-larger">
+          Explore how your boss measures up on the gender pay gap
+        </span>
+        <span>
+          Enter your industry and company above to see how they measure up.
+        </span>
       </div>
     );
   };
@@ -241,50 +225,123 @@ const ScatterplotComponent = () => {
     <div className="scatterplot-container">
       <Card className="scatterplot-card">
         <CardContent>
-          <FormControl fullWidth className="scatterplot-filter">
-            <InputLabel>Industry</InputLabel>
-            <Select
-              value={selectedIndustry}
-              onChange={handleIndustryChange}
-              label="Industry"
+          <Card
+            className="employer-info-card"
+            sx={{
+              "&:last-child": { paddingBottom: "8px" },
+              boxShadow: "none",
+              border: "none",
+              marginBottom: "4px",
+              paddingBottom: "0px",
+            }}
+          >
+            <CardContent
+              sx={{
+                "&:last-child": { paddingBottom: "8px" },
+              }}
             >
-              {industries.map((industry) => (
-                <MenuItem key={industry} value={industry}>
-                  {industry}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Autocomplete
-            freeSolo
-            options={employerOptions}
-            value={searchEmployer}
-            onInputChange={handleSearchChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                fullWidth
-                className="scatterplot-search"
-                label="Search Employer"
-                margin="normal"
-              />
-            )}
-          />
-          <Card className="employer-info-card" variant="outlined">
-            <CardContent>
               <Typography variant="body1">{getEmployerMessage()}</Typography>
             </CardContent>
           </Card>
+          <div className="search-section">
+            <FormControl
+              variant="standard"
+              className="scatterplot-filter"
+              sx={{
+                fontFamily: "YourFont, sans-serif",
+                "& .MuiInputLabel-root": { fontFamily: "YourFont, sans-serif" },
+                "& .MuiSelect-root": { fontFamily: "YourFont, sans-serif" },
+                "& .MuiMenuItem-root": { fontFamily: "YourFont, sans-serif" },
+              }}
+            >
+              <InputLabel>Industry</InputLabel>
+              <Select
+                value={selectedIndustry}
+                onChange={handleIndustryChange}
+                label="Industry"
+              >
+                {industries.map((industry) => (
+                  <MenuItem key={industry} value={industry}>
+                    {industry}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Autocomplete
+              variant="standard"
+              freeSolo
+              options={employerOptions}
+              value={searchEmployer}
+              onInputChange={handleSearchChange}
+              className="scatterplot-search"
+              sx={{
+                width: "100%",
+                fontFamily: "var(--nano-bold-font)",
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "inherit !important",
+                },
+                "& .MuiOutlinedInput-root.Mui-focused": {
+                  borderColor: "inherit",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottom: "none !important",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  className="scatterplot-search"
+                  label="Search Employer"
+                  variant="standard"
+                  margin="normal"
+                  sx={{
+                    fontFamily: "var(--nano-bold-font)",
+                    "& .MuiInputBase-input": {
+                      fontFamily: "var(--nano-bold-font)",
+                    },
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: "inherit !important",
+                    },
+                    "& .MuiInputBase-root:focus-within": {
+                      outline: "none",
+                      boxShadow: "none",
+                    },
+                    "& .MuiInput-underline:after": {
+                      borderBottom: "none !important",
+                    },
+                  }}
+                />
+              )}
+            />
+          </div>
 
           <ResponsiveContainer width="100%" aspect={2}>
             <ScatterChart margin={{ top: 20, right: 10, left: 20, bottom: 10 }}>
+              <defs>
+                <pattern
+                  id="hashedPattern"
+                  patternUnits="userSpaceOnUse"
+                  width="8"
+                  height="8"
+                >
+                  <path
+                    d="M-1,1 l2,-2
+             M0,8 l8,-8
+             M7,9 l2,-2"
+                    stroke="#767676"
+                    strokeWidth="0.5"
+                    fill="none"
+                  />
+                </pattern>
+              </defs>
+
               <CartesianGrid />
               <XAxis
                 type="number"
                 dataKey="xIndex"
-                tick={false} // ✅ Hide tick marks
-                tickLine={false} // ✅ Hide tick lines
-                axisLine={false} // ✅ Hide axis line
+                tick={false}
+                tickLine={false}
+                axisLine={false}
               />
 
               <YAxis
@@ -292,20 +349,21 @@ const ScatterplotComponent = () => {
                 dataKey="average-total-rem-gpg"
                 name="Average Total Rem GPG"
                 domain={[-100, 100]}
-                tickFormatter={(value) => (value === 0 ? "0" : value)} // Ensures 0 is always visible
+                tickFormatter={(value) => (value === 0 ? "0" : value)}
                 label={({ viewBox }) => {
                   if (!viewBox) return null;
 
                   return (
                     <text
-                      x={viewBox.x / 2 + 30} // Moves left of Y-axis (adjust if needed)
-                      y={viewBox.y + viewBox.height / 2} // Centers along the Y-axis
+                      x={viewBox.x / 2 + 30}
+                      y={viewBox.y + viewBox.height / 2}
                       textAnchor="middle"
-                      fontSize={Math.max(viewBox.width * 0.015, 12)} // Responsive font size
-                      fill="black"
+                      fontSize={Math.max(viewBox.width * 0.015, 12)}
+                      fill="#333333"
+                      fontFamily="var(--nano-bold-font)"
                       transform={`rotate(-90, ${viewBox.x / 2 + 30}, ${
                         viewBox.y + viewBox.height / 2
-                      })`} // Rotates in place
+                      })`}
                     >
                       Gender Pay Gap (%)
                     </text>
@@ -313,43 +371,40 @@ const ScatterplotComponent = () => {
                 }}
               />
 
-              <Tooltip
-                content={<CustomTooltip />}
-                wrapperStyle={{ zIndex: 1000, pointerEvents: "none" }}
-              />
+              <defs>
+                <linearGradient
+                  id="redGradientDown"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="100%" stopColor="#c21616" />
+                </linearGradient>
 
-              {industryMidpoint && (
-                <ReferenceLine
-                  y={industryMidpoint}
-                  stroke="#111111"
-                  strokeDasharray="3 3"
-                  label={({ viewBox }) => (
-                    <text
-                      x={viewBox.x + viewBox.width * 0.03} // ✅ Dynamic X position (3% of width)
-                      y={viewBox.y - viewBox.height * 0.03 - 3} // ✅ Dynamic Y position
-                      fill="#333333"
-                      fontSize={Math.max(viewBox.width * 0.015, 12)} // ✅ Dynamic font size
-                      fontWeight="bold"
-                    >
-                      Industry Midpoint
-                    </text>
-                  )}
-                />
-              )}
+                <linearGradient id="redGradientUp" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#c21616" />
+                  <stop offset="100%" stopColor="#ffffff" />
+                </linearGradient>
+              </defs>
 
               <ReferenceArea
                 y1={-5}
                 y2={5}
                 strokeOpacity={0.3}
-                fill="#c7db9f"
+                fill="url(#hashedPattern)"
                 label={({ viewBox }) => (
                   <text
-                    x={viewBox.x + viewBox.width - 20} // ✅ Place label at the right side
-                    y={viewBox.y + viewBox.height / 2 + 3} // ✅ Center vertically
-                    fill="#333333"
-                    fontSize={12}
-                    fontWeight="bold"
-                    textAnchor="end" // ✅ Align text to the right
+                    x={viewBox.x + viewBox.width - 20}
+                    y={viewBox.y + viewBox.height / 2 + 3}
+                    style={{
+                      fontFamily: "var(--nano-bold-font)",
+                      fill: "#333333",
+                      fontSize: Math.max(viewBox.width * 0.015, 10),
+                      fontWeight: "bold",
+                      textAnchor: "end",
+                    }}
                   >
                     Target Range
                   </text>
@@ -360,15 +415,18 @@ const ScatterplotComponent = () => {
                 y1={5}
                 y2={100}
                 strokeOpacity={0.1}
-                fill="#ffdad9"
+                fill="url(#redGradientUp)"
                 label={({ viewBox }) => (
                   <text
-                    x={viewBox.x + viewBox.width - 20} // ✅ Keep label on the right side
-                    y={viewBox.y + 20} // ✅ Position at the top inside the chart
-                    fill="#333333"
-                    fontSize={Math.max(viewBox.width * 0.015, 12)} // ✅ Responsive font size
-                    fontWeight="bold"
-                    textAnchor="end" // ✅ Align text to the right
+                    x={viewBox.x + viewBox.width - 20}
+                    y={viewBox.y + 20}
+                    style={{
+                      fontFamily: "var(--nano-bold-font)",
+                      fontSize: Math.max(viewBox.width * 0.015, 12),
+                      fontWeight: "bold",
+                      textAnchor: "end",
+                      fill: "#c21616",
+                    }}
                   >
                     In Favour of Men
                   </text>
@@ -379,51 +437,84 @@ const ScatterplotComponent = () => {
                 y1={-100}
                 y2={-5}
                 strokeOpacity={0.1}
-                fill="#ffdad9"
+                fill="url(#redGradientDown)"
                 label={({ viewBox }) => (
                   <text
-                    x={viewBox.x + viewBox.width - 20} // ✅ Keep label on the right side
-                    y={viewBox.y + viewBox.height - 10} // ✅ Position at the bottom inside the chart
-                    fill="#333333"
-                    fontSize={Math.max(viewBox.width * 0.015, 12)} // ✅ Responsive font size
-                    fontWeight="bold"
-                    textAnchor="end" // ✅ Align text to the right
+                    x={viewBox.x + viewBox.width - 20}
+                    y={viewBox.y + viewBox.height - 10}
+                    style={{
+                      fontFamily: "var(--nano-bold-font)",
+                      fill: "#c21616",
+                      fontSize: Math.max(viewBox.width * 0.015, 12),
+                      fontWeight: "bold",
+                      textAnchor: "end",
+                    }}
                   >
                     In Favour of Women
                   </text>
                 )}
               />
 
-              <Scatter
-                name="Data Points"
-                data={data}
-                fill="#a5a5a5"
-                shape={(props) => <CustomDot {...props} />}
-                fillOpacity={0.7}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={300}
-                animationEasing="ease-out"
-              />
-              {highlightedEmployer && (
+              {industryMidpoint && (
+                <ReferenceLine
+                  y={industryMidpoint}
+                  stroke="#333333"
+                  strokeDasharray="3 3"
+                  label={({ viewBox }) => (
+                    <text
+                      x={viewBox.x + viewBox.width * 0.03}
+                      y={viewBox.y - viewBox.height * 0.03 - 3}
+                      style={{
+                        fontFamily: "var(--nano-bold-font)",
+                        fill: "#333333",
+                        fontSize: Math.max(viewBox.width * 0.015, 10),
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Industry Midpoint
+                    </text>
+                  )}
+                />
+              )}
+              {data && (
+                <Scatter
+                  name="Data Points"
+                  data={data}
+                  fill="#d4d4d4"
+                  shape={(props) => <CustomDot {...props} />}
+                  fillOpacity={1}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={300}
+                  animationEasing="ease-out"
+                />
+              )}
+              {highlightedEmployer && data && (
                 <Scatter
                   name="Highlighted Employer"
-                  data={[highlightedEmployer]} // ✅ Correctly positioned red dot
+                  data={[highlightedEmployer]}
                   isAnimationActive={true}
-                  animationBegin={500} // ✅ Appears after normal dots
+                  animationBegin={500}
                   animationDuration={300}
                   animationEasing="ease-out"
                   shape={(props) => <FlashingDot {...props} />}
                 />
               )}
+              <Tooltip
+                content={<CustomTooltip />}
+                wrapperStyle={{ zIndex: 1000, pointerEvents: "none" }}
+              />
             </ScatterChart>
             <text
               x="50%"
-              y="95%" // Adjust position as needed
+              y="95%"
               textAnchor="left"
-              fontSize={({ viewBox }) => Math.max(viewBox.width * 0.015, 8)}
-              fill="black"
-              style={{ fontStyle: "italic" }}
+              fontSize={({ viewBox }) => Math.max(viewBox.width * 0.0005, 1.5)}
+              fill="#333333"
+              style={{
+                fontStyle: "italic",
+                fontFamily: "var(--nano-light-font)",
+              }}
             >
               Source: Employer gender pay gaps report, March 2025. The 'gender
               pay gap' is defined as 'the difference between the average or
