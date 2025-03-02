@@ -192,7 +192,10 @@ const ScatterplotComponent = () => {
 
         return (
           <div>
-            <span className="industry-name">{industry}</span> is{" "}
+            <span className="industry-name">
+              Each dot on the chart represents a company within {industry},
+            </span>{" "}
+            which is{" "}
             {genderBalanced === "women" ? (
               <strong className="gpg">a female-dominated industry.</strong>
             ) : genderBalanced === "men" ? (
@@ -316,7 +319,7 @@ const ScatterplotComponent = () => {
           </div>
 
           <ResponsiveContainer width="100%" aspect={2}>
-            <ScatterChart margin={{ top: 20, right: 10, left: 20, bottom: 10 }}>
+            <ScatterChart margin={{ top: 20, right: 10, left: 10, bottom: 10 }}>
               <defs>
                 <pattern
                   id="hashedPattern"
@@ -350,6 +353,7 @@ const ScatterplotComponent = () => {
                 name="Average Total Rem GPG"
                 domain={[-100, 100]}
                 tickFormatter={(value) => (value === 0 ? "0" : value)}
+                fontSize={"clamp(10px, 1.5vw, 14px)"}
                 label={({ viewBox }) => {
                   if (!viewBox) return null;
 
@@ -358,7 +362,10 @@ const ScatterplotComponent = () => {
                       x={viewBox.x / 2 + 30}
                       y={viewBox.y + viewBox.height / 2}
                       textAnchor="middle"
-                      fontSize={Math.max(viewBox.width * 0.015, 12)}
+                      fontSize={Math.max(
+                        Math.min(viewBox.width * 0.015, 14),
+                        10
+                      )}
                       fill="#333333"
                       fontFamily="var(--nano-bold-font)"
                       transform={`rotate(-90, ${viewBox.x / 2 + 30}, ${
