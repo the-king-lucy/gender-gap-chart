@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   ScatterChart,
   Scatter,
@@ -41,10 +41,31 @@ const ScatterplotComponent = () => {
     }
   }, []);
 
+  const renderXAxisLabel = useCallback(({ viewBox }) => {
+    if (!viewBox) return null; // ✅ Prevents errors if viewBox is undefined
+
+    return (
+      <text
+        x={viewBox.x + viewBox.width / 2} // ✅ Centers label horizontally
+        y={viewBox.y + viewBox.height / 2 + 10} // ✅ Places it inside the middle of the chart
+        textAnchor="middle"
+        fontSize={Math.max(viewBox.width * 0.02, 12)}
+        fontWeight="bold"
+        fill="black"
+      >
+        Employer
+      </text>
+    );
+  }, []);
+
   const handleIndustryChange = (event) => {
     const industry = event.target.value;
     setSelectedIndustry(industry);
     setHighlightedEmployer(null); // ✅ Clear highlighted dot initially
+
+    // ✅ Reset employer selection
+    setSearchEmployer(""); // Clears the employer search box
+    setEmployerInfo(null); // Clears employer info
 
     const filteredData = genderGapData
       .filter((item) => item.industry === industry)
@@ -220,9 +241,12 @@ const ScatterplotComponent = () => {
       }
     }
     return (
-      <span>
-        Select an employer or industry to see gender pay gap insights.
-      </span>
+      <div>
+        <span>Does your company have a gender pay gap?</span>
+        <br></br>
+        <br></br>
+        <span>Choose an industry or an employer above to find out.</span>
+      </div>
     );
   };
 
@@ -268,29 +292,16 @@ const ScatterplotComponent = () => {
             </CardContent>
           </Card>
 
-          <ResponsiveContainer width="100%" height={400}>
-            <ScatterChart
-              margin={{ top: 20, right: 30, left: 30, bottom: 50 }} // ✅ Increased bottom margin
-            >
+          <ResponsiveContainer width="100%" height={500}>
+            <ScatterChart margin={{ top: 20, right: 30, left: 30, bottom: 80 }}>
               <CartesianGrid />
               <XAxis
                 type="number"
                 dataKey="xIndex"
-                tick={false} // ✅ Remove tick marks
-                tickLine={false} // ✅ Remove tick lines
+                tick={false} // ✅ Hide tick marks
+                tickLine={false} // ✅ Hide tick lines
                 axisLine={false} // ✅ Hide axis line
-                label={({ viewBox }) => (
-                  <text
-                    x={viewBox.width * 0.7} // ✅ Dynamically centers label
-                    y={viewBox.height + 320} // ✅ Adjusts position dynamically
-                    textAnchor="middle"
-                    fontSize={Math.max(viewBox.width * 0.02, 12)} // ✅ Scales with screen size, minimum 12px
-                    fontWeight="bold"
-                    fill="black"
-                  >
-                    Employer
-                  </text>
-                )}
+                label={renderXAxisLabel} // ✅ Memoized function
               />
 
               <YAxis
