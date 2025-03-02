@@ -153,32 +153,31 @@ const ScatterplotComponent = () => {
         "total-workforce-average-rem": rem,
         "upper-quartile-women": women,
       } = employerInfo;
-      const industryMidpoint = industryMidpoints.find(
-        (item) => item.industry === selectedIndustry
-      )?.["mid-point"];
 
       return (
         <div>
           <strong>{employer}</strong> has an average gender pay gap{" "}
           {gpg > 5 ? (
-            <strong className="gpg">in favour of men.</strong>
+            <strong className="gpg">"in favour of men".</strong>
           ) : gpg < -5 ? (
-            <strong className="gpg">in favour of women.</strong>
+            <strong className="gpg">"in favour of women".</strong>
           ) : (
             <strong className="balance">
               that does not significantly favour men or women.
             </strong>
           )}
-          {industryMidpoint !== undefined && <></>}
           <br />
           <span>
             The total average remuneration is{" "}
-            <span>${rem.toLocaleString()}</span> and <strong>{women}%</strong>{" "}
-            of their leadership are women.
+            <strong>${rem.toLocaleString()}</strong> and{" "}
+            <strong>{women}%</strong> of its leadership is women. Hover over a
+            dot on the chart to compare with other employers.
           </span>
         </div>
       );
-    } else if (selectedIndustry) {
+    }
+
+    if (selectedIndustry) {
       const industryData = industryMidpoints.find(
         (item) => item.industry === selectedIndustry
       );
@@ -193,13 +192,14 @@ const ScatterplotComponent = () => {
         return (
           <div>
             <span className="industry-name">
-              Each dot on the chart represents a company within {industry},
+              Each dot on the chart represents a company within{" "}
+              <strong>{industry}</strong>,
             </span>{" "}
             which is{" "}
             {genderBalanced === "women" ? (
-              <strong className="gpg">a female-dominated industry.</strong>
+              <strong className="gpg">a "women-dominated" industry.</strong>
             ) : genderBalanced === "men" ? (
-              <strong className="gpg">a male-dominated industry.</strong>
+              <strong className="gpg">a "men-dominated" industry.</strong>
             ) : (
               <strong className="balance">considered gender balanced.</strong>
             )}
@@ -212,6 +212,7 @@ const ScatterplotComponent = () => {
         );
       }
     }
+
     return (
       <div className="intro-text">
         <span className="intro-text-larger">
@@ -276,6 +277,11 @@ const ScatterplotComponent = () => {
               options={employerOptions}
               value={searchEmployer}
               onInputChange={handleSearchChange}
+              filterOptions={(options, state) =>
+                options.filter((option) =>
+                  option.toLowerCase().includes(state.inputValue.toLowerCase())
+                )
+              }
               className="scatterplot-search"
               sx={{
                 width: "100%",
@@ -316,6 +322,7 @@ const ScatterplotComponent = () => {
                 />
               )}
             />
+            ;
           </div>
 
           <ResponsiveContainer width="100%" aspect={2}>
@@ -413,7 +420,7 @@ const ScatterplotComponent = () => {
                       textAnchor: "end",
                     }}
                   >
-                    Target Range
+                    Target range
                   </text>
                 )}
               />
@@ -435,7 +442,7 @@ const ScatterplotComponent = () => {
                       fill: "#c21616",
                     }}
                   >
-                    In Favour of Men
+                    In favour of men
                   </text>
                 )}
               />
@@ -457,7 +464,7 @@ const ScatterplotComponent = () => {
                       textAnchor: "end",
                     }}
                   >
-                    In Favour of Women
+                    In favour of women
                   </text>
                 )}
               />
@@ -478,7 +485,7 @@ const ScatterplotComponent = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      Industry Midpoint
+                      Industry midpoint
                     </text>
                   )}
                 />
@@ -513,10 +520,10 @@ const ScatterplotComponent = () => {
               />
             </ScatterChart>
             <text x="50%" y="95%" textAnchor="left" className="source-text">
-              Source: Employer gender pay gaps report, March 2025. The 'gender
-              pay gap' is defined as 'the difference between the average or
-              median remuneration of men and the average or median remuneration
-              of women, expressed as a percentage of men’s remuneration'.
+              Source: WGEA. The 'gender pay gap' is defined as 'the difference
+              between the average or median remuneration of men and the average
+              or median remuneration of women, expressed as a percentage of
+              men’s remuneration'.
             </text>
           </ResponsiveContainer>
         </CardContent>

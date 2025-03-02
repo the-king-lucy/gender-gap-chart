@@ -16,7 +16,7 @@
 }
 
 .source-text {
-  font-size: clamp(10px, 1vw, 12px); /* Adjusts based on screen size */
+  font-size: clamp(10px, 1vw, 12px);
   font-family: var(--nano-light-font);
 
   fill: #333333;
