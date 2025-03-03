@@ -322,7 +322,6 @@ const ScatterplotComponent = () => {
                 />
               )}
             />
-            ;
           </div>
 
           <ResponsiveContainer width="100%" aspect={2}>
