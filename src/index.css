@@ -27,7 +27,7 @@
 }
 
 @font-face {
-  font-family: "SuecaHDsemibold";
+  font-family: "SuecaHdsemibold";
   src: url("./fonts/SuecaHd-Semibold.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
@@ -37,7 +37,7 @@
 html,
 body {
   --headline-font: "SuecaHDRegular", sans-serif;
-  --boldheadline-font: "SuecaHDsemibold", sans-serif;
+  --boldheadline-font: "SuecaHdsemibold", sans-serif;
   --nano-medium-font: "SuecaNanoMedium", sans-serif;
   --nano-bold-font: "SuecaNano", sans-serif;
   --nano-light-font: "SuecaNanoLight", sans-serif;

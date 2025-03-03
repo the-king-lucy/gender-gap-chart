@@ -123,18 +123,26 @@ const ScatterplotComponent = () => {
       return (
         <div className="custom-tooltip">
           <p>
-            <strong>{item.employer}</strong> has an average gender pay gap of{" "}
-            <strong>{item["average-total-rem-gpg"]}%</strong>.
+            <span style={{ fontFamily: "var(--nano-bold-font)" }}>
+              {item.employer}
+            </span>{" "}
+            has an average gender pay gap of{" "}
+            <span style={{ fontFamily: "var(--nano-bold-font)" }}>
+              {item["average-total-rem-gpg"]}%
+            </span>
+            .
           </p>
           <p>
-            <strong>{item["upper-quartile-women"]}%</strong> of its leadership
-            is women.
+            <span style={{ fontFamily: "var(--nano-bold-font)" }}>
+              {item["upper-quartile-women"]}%
+            </span>{" "}
+            of its top quartile earners are women.
           </p>
           <p>
             The company has an average total remuneration of{" "}
-            <strong>
+            <span style={{ fontFamily: "var(--nano-bold-font)" }}>
               ${item["total-workforce-average-rem"].toLocaleString()}
-            </strong>
+            </span>
             .
           </p>
         </div>
@@ -158,21 +166,30 @@ const ScatterplotComponent = () => {
 
       return (
         <div>
-          <strong>{employer}</strong> has an average gender pay gap{" "}
+          <strong>{employer}</strong> has an average gender pay gap of{" "}
+          <span style={{ fontFamily: "SuecaHdsemibold" }}>{gpg}%</span>{" "}
           {gpg > 5 ? (
-            <strong className="gpg">"in favour of men".</strong>
+            <span style={{ fontFamily: "SuecaHdsemibold" }} className="gpg">
+              {" "}
+              in "favour of men".
+            </span>
           ) : gpg < -5 ? (
-            <strong className="gpg">"in favour of women".</strong>
+            <span style={{ fontFamily: "SuecaHdsemibold" }} className="gpg">
+              in "favour of women".
+            </span>
           ) : (
-            <strong className="balance">
+            <span style={{ fontFamily: "SuecaHdsemibold" }} className="balance">
               that does not significantly favour men or women.
-            </strong>
+            </span>
           )}
           <br />
           <span>
             The total average remuneration is{" "}
-            <strong>${rem.toLocaleString()}</strong> and{" "}
-            <strong>{women}%</strong> of its leadership is women.
+            <span style={{ fontFamily: "SuecaHdsemibold" }}>
+              ${rem.toLocaleString()}
+            </span>{" "}
+            and <span style={{ fontFamily: "SuecaHdsemibold" }}>{women}%</span>{" "}
+            of its top quartile earners are women.
           </span>
           {!isSmallScreen && (
             <span>
@@ -200,19 +217,31 @@ const ScatterplotComponent = () => {
           <div>
             <span className="industry-name">
               Each dot on the chart represents a company within{" "}
-              <strong>{industry}</strong>,
+              <span style={{ fontFamily: "SuecaHdsemibold" }}>{industry}</span>,
             </span>{" "}
             which is{" "}
             {genderBalanced === "women" ? (
-              <strong className="gpg">a "women-dominated" industry.</strong>
+              <span style={{ fontFamily: "SuecaHdsemibold" }} className="gpg">
+                a "women-dominated" industry.
+              </span>
             ) : genderBalanced === "men" ? (
-              <strong className="gpg">a "men-dominated" industry.</strong>
+              <span style={{ fontFamily: "SuecaHdsemibold" }} className="gpg">
+                a "men-dominated" industry.
+              </span>
             ) : (
-              <strong className="balance">considered gender balanced.</strong>
+              <span
+                style={{ fontFamily: "SuecaHdsemibold" }}
+                className="balance"
+              >
+                considered gender balanced.
+              </span>
             )}
             <br />
             <span className="percent-women">
-              <strong>{percentWomen}%</strong> of the workforce are women.
+              <span style={{ fontFamily: "SuecaHdsemibold" }}>
+                {percentWomen}%
+              </span>{" "}
+              of the workforce are women.
             </span>{" "}
             {!isSmallScreen && (
               <span>
