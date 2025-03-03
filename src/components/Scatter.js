@@ -179,7 +179,7 @@ const ScatterplotComponent = () => {
             </span>
           ) : (
             <span style={{ fontFamily: "SuecaHdsemibold" }} className="balance">
-              that does not significantly favour men or women.
+              which is considered neutral.
             </span>
           )}
           <br />
