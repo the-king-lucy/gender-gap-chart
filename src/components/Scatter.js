@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useMediaQuery } from "@mui/material";
 import {
   ScatterChart,
   Scatter,
@@ -33,6 +34,7 @@ const ScatterplotComponent = () => {
   const [selectedIndustry, setSelectedIndustry] = useState("");
   const [searchEmployer, setSearchEmployer] = useState("");
   const [employerInfo, setEmployerInfo] = useState(null);
+  const isSmallScreen = useMediaQuery("(max-width:620px)"); // Detect screens smaller than 620px
 
   const [highlightedEmployer, setHighlightedEmployer] = useState(null);
 
@@ -125,8 +127,8 @@ const ScatterplotComponent = () => {
             <strong>{item["average-total-rem-gpg"]}%</strong>.
           </p>
           <p>
-            <strong>{item["upper-quartile-women"]}%</strong> of their leadership
-            are women.
+            <strong>{item["upper-quartile-women"]}%</strong> of its leadership
+            is women.
           </p>
           <p>
             The company has an average total remuneration of{" "}
@@ -170,9 +172,14 @@ const ScatterplotComponent = () => {
           <span>
             The total average remuneration is{" "}
             <strong>${rem.toLocaleString()}</strong> and{" "}
-            <strong>{women}%</strong> of its leadership is women. Hover over a
-            dot on the chart to compare with other employers.
+            <strong>{women}%</strong> of its leadership is women.
           </span>
+          {!isSmallScreen && (
+            <span>
+              {" "}
+              Hover over a dot on the chart to compare with other employers.
+            </span>
+          )}
         </div>
       );
     }
@@ -205,9 +212,14 @@ const ScatterplotComponent = () => {
             )}
             <br />
             <span className="percent-women">
-              <strong>{percentWomen}%</strong> of the workforce are women. Hover
-              over a dot to find information about different employers.
-            </span>
+              <strong>{percentWomen}%</strong> of the workforce are women.
+            </span>{" "}
+            {!isSmallScreen && (
+              <span>
+                {" "}
+                Hover a dot to find information about different employers.
+              </span>
+            )}
           </div>
         );
       }
@@ -227,8 +239,17 @@ const ScatterplotComponent = () => {
 
   return (
     <div className="scatterplot-container">
-      <Card className="scatterplot-card">
-        <CardContent>
+      <Card
+        className="scatterplot-card"
+        sx={{
+          boxShadow: "none",
+        }}
+      >
+        <CardContent
+          sx={{
+            padding: "2px",
+          }}
+        >
           <Card
             className="employer-info-card"
             sx={{
@@ -237,6 +258,7 @@ const ScatterplotComponent = () => {
               border: "none",
               marginBottom: "4px",
               paddingBottom: "0px",
+              padding: "2px",
             }}
           >
             <CardContent
@@ -253,6 +275,8 @@ const ScatterplotComponent = () => {
               className="scatterplot-filter"
               sx={{
                 fontFamily: "YourFont, sans-serif",
+                marginTop: "8px !important",
+                alignSelf: "center",
                 "& .MuiInputLabel-root": { fontFamily: "YourFont, sans-serif" },
                 "& .MuiSelect-root": { fontFamily: "YourFont, sans-serif" },
                 "& .MuiMenuItem-root": { fontFamily: "YourFont, sans-serif" },
@@ -272,7 +296,6 @@ const ScatterplotComponent = () => {
               </Select>
             </FormControl>
             <Autocomplete
-              variant="standard"
               freeSolo
               options={employerOptions}
               value={searchEmployer}
@@ -286,6 +309,7 @@ const ScatterplotComponent = () => {
               sx={{
                 width: "100%",
                 fontFamily: "var(--nano-bold-font)",
+                alignSelf: "center",
                 "& .MuiInputLabel-root.Mui-focused": {
                   color: "inherit !important",
                 },
@@ -300,10 +324,12 @@ const ScatterplotComponent = () => {
                 <TextField
                   {...params}
                   className="scatterplot-search"
-                  label="Search Employer"
+                  label="Employer"
                   variant="standard"
                   margin="normal"
                   sx={{
+                    marginTop: "8px !important", // Adjust margin-top here
+
                     fontFamily: "var(--nano-bold-font)",
                     "& .MuiInputBase-input": {
                       fontFamily: "var(--nano-bold-font)",
@@ -325,7 +351,7 @@ const ScatterplotComponent = () => {
           </div>
 
           <ResponsiveContainer width="100%" aspect={2}>
-            <ScatterChart margin={{ top: 20, right: 10, left: 10, bottom: 10 }}>
+            <ScatterChart margin={{ top: 20, right: 0, left: 0, bottom: 10 }}>
               <defs>
                 <pattern
                   id="hashedPattern"
@@ -378,7 +404,7 @@ const ScatterplotComponent = () => {
                         viewBox.y + viewBox.height / 2
                       })`}
                     >
-                      Gender Pay Gap (%)
+                      Gender pay gap (%)
                     </text>
                   );
                 }}
@@ -435,7 +461,7 @@ const ScatterplotComponent = () => {
                     y={viewBox.y + 20}
                     style={{
                       fontFamily: "var(--nano-bold-font)",
-                      fontSize: Math.max(viewBox.width * 0.015, 12),
+                      fontSize: Math.max(viewBox.width * 0.015, 10),
                       fontWeight: "bold",
                       textAnchor: "end",
                       fill: "#c21616",
@@ -458,7 +484,7 @@ const ScatterplotComponent = () => {
                     style={{
                       fontFamily: "var(--nano-bold-font)",
                       fill: "#c21616",
-                      fontSize: Math.max(viewBox.width * 0.015, 12),
+                      fontSize: Math.max(viewBox.width * 0.015, 10),
                       fontWeight: "bold",
                       textAnchor: "end",
                     }}
@@ -513,16 +539,15 @@ const ScatterplotComponent = () => {
                   shape={(props) => <FlashingDot {...props} />}
                 />
               )}
-              <Tooltip
-                content={<CustomTooltip />}
-                wrapperStyle={{ zIndex: 1000, pointerEvents: "none" }}
-              />
+              {!isSmallScreen && <Tooltip content={<CustomTooltip />} />}
             </ScatterChart>
             <text x="50%" y="95%" textAnchor="left" className="source-text">
-              Source: WGEA. The 'gender pay gap' is defined as 'the difference
-              between the average or median remuneration of men and the average
-              or median remuneration of women, expressed as a percentage of
-              men’s remuneration'.
+              Source: WGEA. The gender pay gap displayed here is the difference
+              between the average remuneration of men and the average
+              remuneration of women, expressed as a percentage of men’s
+              remuneration. The graphic displays the average gap as it pertains
+              to total remuneration, which includes overtime, bonuses and
+              superannuation. A gender pay gap of +/-5 % is considered neutral.
             </text>
           </ResponsiveContainer>
         </CardContent>

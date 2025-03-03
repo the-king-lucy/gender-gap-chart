@@ -7,12 +7,10 @@
 }
 
 .scatterplot-card {
-  width: 75%;
   padding: 16px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   background-color: white;
-  padding-bottom: 0px;
 }
 
 .source-text {
@@ -40,14 +38,12 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 4px;
   padding-top: 0px;
 }
 
 .search-section .scatterplot-filter,
 .search-section .scatterplot-search {
   flex: 1;
-  min-height: 40px;
   min-width: 0;
 }
 
@@ -109,12 +105,6 @@
 .intro-text span {
   display: block;
   margin-bottom: 8px;
-}
-
-.scatterplot-title {
-  margin-bottom: 16px;
-  font-size: 1.5rem;
-  color: #333;
 }
 
 .gpg {

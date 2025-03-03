@@ -51,3 +51,8 @@ body {
   padding: 0;
   overflow: hidden;
 }
+
+/* Override Material UI's default typography */
+.MuiTypography-root {
+  font-family: var(--headline-font), sans-serif !important;
+}
