@@ -1,58 +1,62 @@
 @font-face {
-  font-family: "SuecaNanoBold";
-  src: url("./fonts/SuecaNano-Bold.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
+    font-family: "SuecaNanoBold";
+    src: url("./fonts/SuecaNano-Bold.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: "SuecaHDRegular";
-  src: url("./fonts/SuecaHd-Regular.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
+    font-family: "SuecaHDRegular";
+    src: url("./fonts/SuecaHd-Regular.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: "SuecaNanoMedium";
-  src: url("./fonts/SuecaNano-Medium.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
+    font-family: "SuecaNanoMedium";
+    src: url("./fonts/SuecaNano-Medium.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: "SuecaNanoLight";
-  src: url("./fonts/SuecaNano-Light.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
+    font-family: "SuecaNanoLight";
+    src: url("./fonts/SuecaNano-Light.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: "SuecaHdsemibold";
-  src: url("./fonts/SuecaHd-Semibold.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
+    font-family: "SuecaHdsemibold";
+    src: url("./fonts/SuecaHd-Semibold.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
 }
 
 :root,
 html,
 body {
-  --headline-font: "SuecaHDRegular", sans-serif;
-  --boldheadline-font: "SuecaHdsemibold", sans-serif;
-  --nano-medium-font: "SuecaNanoMedium", sans-serif;
-  --nano-bold-font: "SuecaNano", sans-serif;
-  --nano-light-font: "SuecaNanoLight", sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  overflow: hidden;
+    --headline-font: "SuecaHDRegular", sans-serif;
+    --boldheadline-font: "SuecaHdsemibold", sans-serif;
+    --nano-medium-font: "SuecaNanoMedium", sans-serif;
+    --nano-bold-font: "SuecaNano", sans-serif;
+    --nano-light-font: "SuecaNanoLight", sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    /* height: 100%; */
+    /* width: 100%; */
+    padding: 0;
+    overflow: hidden;
 }
 
 /* Override Material UI's default typography */
 .MuiTypography-root {
-  font-family: var(--headline-font), sans-serif !important;
+    font-family: var(--headline-font), sans-serif !important;
+}
+
+.select input {
+    font-family: SuecaNanoLight;
 }

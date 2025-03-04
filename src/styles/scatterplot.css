@@ -1,169 +1,188 @@
 .scatterplot-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* height: 100vh; */
+    background-color: #ffffff;
 }
 
 .scatterplot-card {
-  padding: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  background-color: white;
+    padding: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    background-color: white;
 }
 
 .source-text {
-  font-size: clamp(10px, 1vw, 12px);
-  font-family: var(--nano-light-font);
-  fill: #333333;
+    font-size: clamp(10px, 1vw, 12px);
+    font-family: var(--nano-light-font);
+    fill: #333333;
 }
 
 @keyframes glow {
-  0% {
-    filter: drop-shadow(0 0 2px red);
-  }
-  50% {
-    filter: drop-shadow(0 0 6px red);
-  }
-  100% {
-    filter: drop-shadow(0 0 2px red);
-  }
+    0% {
+        filter: drop-shadow(0 0 2px red);
+    }
+    50% {
+        filter: drop-shadow(0 0 6px red);
+    }
+    100% {
+        filter: drop-shadow(0 0 2px red);
+    }
 }
 
 .search-section {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding-top: 0px;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    /* width: 50%; */
+    padding-top: 0px;
+    text-align: left;
+}
+
+@media screen and (max-width: 621px) {
+    .search-section {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
 
 .search-section .scatterplot-filter,
 .search-section .scatterplot-search {
-  flex: 1;
-  min-width: 0;
+    flex: 1;
+    min-width: 0;
 }
 
 .scatterplot-filter .Mui-focused {
-  outline: none !important;
-  box-shadow: none !important;
-  color: "#333333";
+    outline: none !important;
+    box-shadow: none !important;
+    color: "#333333";
 }
 
 .scatterplot-search .MuiInputBase-root {
-  font-family: "YourFont", sans-serif !important;
+    font-family: "YourFont", sans-serif !important;
 }
 
 .scatterplot-search .MuiInputBase-input {
-  font-family: "YourFont", sans-serif !important;
+    font-family: "YourFont", sans-serif !important;
 }
 
 .scatterplot-filter .MuiInputBase-root:focus-within {
-  outline: none !important;
-  box-shadow: none !important;
-  color: "#333333";
+    outline: none !important;
+    box-shadow: none !important;
+    color: "#333333";
 }
 
 .scatterplot-filter .MuiInputLabel-root.Mui-focused {
-  color: inherit !important;
+    color: inherit !important;
 }
 
 .scatterplot-filter .MuiInput-underline:after {
-  border-bottom: none !important;
-  color: "#333333";
+    border-bottom: none !important;
+    color: "#333333";
 }
 
 .search-section .scatterplot-search .MuiAutocomplete-root {
-  width: 100% !important;
-  display: flex;
+    width: 100% !important;
+    display: flex;
 }
 
 .search-section .scatterplot-search .MuiAutocomplete-root,
 .search-section .scatterplot-search .MuiTextField-root {
-  flex-grow: 1;
-  width: 100% !important;
+    flex-grow: 1;
+    width: 100% !important;
 }
 
 .glowing-dot {
-  animation: glow 0.5s infinite alternate;
+    animation: glow 0.5s infinite alternate;
 }
 
 .intro-text {
-  font-family: var(--boldheadline-font);
-  font-size: clamp(12px, 2vw, 17px);
+    font-family: var(--boldheadline-font);
+    font-size: clamp(12px, 2vw, 17px);
 }
 
 .intro-text-larger {
-  font-family: var(--boldheadline-font);
+    font-family: var(--boldheadline-font);
 
-  font-size: clamp(16px, 3vw, 22px);
+    font-size: clamp(16px, 3vw, 22px);
 }
 
 .intro-text span {
-  display: block;
-  margin-bottom: 8px;
+    display: block;
+    margin-bottom: 8px;
 }
 
 .gpg {
-  color: #111111;
-  background-color: #ffa4a3;
+    color: #111111;
+    background-color: #ffa4a3;
 }
 
 .balance {
-  color: #111111;
-  background-color: #d4d4d4;
+    color: #111111;
+    background-color: #d4d4d4;
 }
 
 .custom-tooltip {
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #d3d3d3;
-  border-radius: 8px;
-  padding: 10px 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: var(--nano-light-font);
-  font-size: 14px;
-  color: #333;
-  max-width: 250px;
-  transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #d3d3d3;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: var(--nano-light-font);
+    font-size: 14px;
+    color: #333;
+    max-width: 250px;
+    transition: all 0.2s ease;
 }
 
 .bold-nano {
-  font-family: var(--nano-bold-font);
+    font-family: var(--nano-bold-font);
 }
 
 .bold-hd {
-  font-family: "SuecaHdsemibold", sans-serif;
+    font-family: "SuecaHdsemibold", sans-serif;
 }
 
 .custom-tooltip p {
-  margin: 0;
-  padding: 4px 0;
-  line-height: 1.4;
+    margin: 0;
+    padding: 4px 0;
+    line-height: 1.4;
 }
 
 .custom-tooltip p strong {
-  color: #555;
+    color: #555;
 }
 
 .custom-tooltip::before {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 8px;
-  border-style: solid;
-  border-color: white transparent transparent transparent;
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
 }
 
 .custom-tooltip:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .employer-name {
-  font-weight: bold;
-  font-size: 1.2em;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.css-s3arc-MuiFormControl-root-MuiTextField-root {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.css-8pfid1 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
